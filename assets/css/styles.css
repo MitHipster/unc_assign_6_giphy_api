@@ -59,7 +59,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 footer {
@@ -87,6 +87,7 @@ footer {
   .header-container,
   footer {
     height: 80px;
+    padding: 0 2rem;
   }
   
   .logo {
