@@ -67,7 +67,7 @@ function gifCard(gif) {
   console.log(gif);
   let html = 
     `<div class="gif-card">
-      <img src="${gif.images.original_still.url}" 
+      <img class="still-gif" src="${gif.images.original_still.url}" 
       data-toggle="${gif.images.original.url}" 
       alt="">
       <p>Rating: ${gif.rating}</p>

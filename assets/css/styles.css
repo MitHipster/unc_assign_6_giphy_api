@@ -80,12 +80,23 @@ button:hover {
   overflow-x: scroll;
 }
 
+.gif-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 /* Page Elements */
 
 .logo {
   width: 48px;
   height: 48px;
   margin-right: -0.75rem;
+}
+
+.still-gif {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Media Queries
