@@ -1,7 +1,6 @@
 /*jslint esversion: 6, browser: true*/
 /*global window, console, $, jQuery, alert*/
 
-let search = 'https://api.giphy.com/v1/gifs/search?';
 const limit = 10;
 const rating = 'pg-13';
 const key = 'df241e37d4254980952f95c9742d1247';
@@ -32,22 +31,6 @@ let movies = [
   "The Shawshank Redemption"
 ];
 
-
-search += $.param({
-  q: 'the matrix',
-  api_key: key,
-  limit: limit,
-  rating: rating
-});
-
-console.log(search);
-$.ajax({
-  url: search,
-  method: 'GET'
-}).done(function (results) {
-  console.log(results);
-});
-
 $.each(movies, function(i, movie) {
   let button = $('<button>');
   button.attr({
@@ -58,5 +41,20 @@ $.each(movies, function(i, movie) {
 });
 
 $btnCl.on('click', 'button', function () {
-  console.log($(this).val());
+  let title = $(this).val();
+  let search = 'https://api.giphy.com/v1/gifs/search?';
+  search += $.param({
+    q: title,
+    api_key: key,
+    limit: limit,
+    rating: rating
+  });
+
+  $.ajax({
+    url: search,
+    method: 'GET'
+  }).done(function (results) {
+    console.log(results);
+    search = "";
+  });
 });

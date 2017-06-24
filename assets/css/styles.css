@@ -35,11 +35,16 @@ main {
 
 button {
   font-family: 'Oswald', sans-serif;
-  background-color: #999237;
+  background-color: #a7a03c;
   border: none;
   border-radius: 5px;
   margin: 0.5rem 0 0.5rem 0.5rem;
   padding: 0.5rem 0.75rem;
+  transition: background-color 0.4s ease-out;
+}
+
+button:hover {
+  background-color: #c4bc5b;
 }
 
 /* Base Layout Styles
@@ -51,8 +56,13 @@ button {
 
 /* Layout Containers */
 
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
 .header-container,
-footer {
+.footer-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,22 +70,22 @@ footer {
   padding: 0 1rem;
 }
 
-.btn-container {
-  display: flex;
-  overflow-x: scroll;
-}
-
-footer {
+.footer-container {
   flex-direction: column;
   justify-content: center;
 }
 
+.btn-container {
+  display: flex;
+  overflow-x: scroll;
+}
 
 /* Page Elements */
 
 .logo {
   width: 48px;
   height: 48px;
+  margin-right: -0.75rem;
 }
 
 /* Media Queries
@@ -88,14 +98,20 @@ footer {
   }
   
   .header-container,
-  footer {
+  .footer-container {
     height: 80px;
     padding: 0 2rem;
+  }
+  
+  .footer-container {
+    flex-direction: row;
+    justify-content: space-between;
   }
   
   .logo {
     width: 64px;
     height: 64px;
+    margin-right: -1rem;
   }
 }
 
