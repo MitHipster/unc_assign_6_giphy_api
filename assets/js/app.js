@@ -6,20 +6,21 @@ const rating = 'pg-13';
 const key = 'df241e37d4254980952f95c9742d1247';
 
 const $btnCl = $('.btn-container');
+const $gifCl = $('.gif-container');
 
 let movies = [
-  "The Sting",
+  "Die Hard",
   "Gran Torino",
   "Braveheart",
   "Full Metal Jacket",
   "The Green Mile",
   "Raging Bull",
   "The Departed",
-  "Lawrence of Arabia",
+  "Platoon",
   "The Shining",
   "Terminator 2",
   "Apocalypse Now",
-  "Dr StrangeLove",
+  "Dr Strangelove",
   "Forrest Gump",
   "The Usual Suspects",
   "The Matrix",
@@ -54,7 +55,22 @@ $btnCl.on('click', 'button', function () {
     url: search,
     method: 'GET'
   }).done(function (results) {
-    console.log(results);
     search = "";
+    $gifCl.empty();
+    $.each(results.data, function(i, result) {
+      gifCard(result);
+    });
   });
 });
+
+function gifCard(gif) {
+  console.log(gif);
+  let html = 
+    `<div class="gif-card">
+      <img src="${gif.images.original_still.url}" 
+      data-toggle="${gif.images.original.url}" 
+      alt="">
+      <p>Rating: ${gif.rating}</p>
+    </div>`;
+  $gifCl.append(html);
+}
