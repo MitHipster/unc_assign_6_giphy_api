@@ -19,7 +19,7 @@ let movies = [
   "Breakfast Club",
   "Bad Moms",
   "The Blues Brothers",
-  "Platoon",
+  "Dumb and Dumber",
   "The Shining",
   "Terminator 2",
   "Apocalypse Now",
@@ -68,9 +68,24 @@ $addBtn.on('click', function () {
 });
 
 $gifCl.on('click', 'img', function () {
+//  let src = $(this).attr('src');
+//  $(this).attr('src', $(this).data('toggle'));
+//  $(this).data('toggle', src);
   let src = $(this).attr('src');
-  $(this).attr('src', $(this).data('toggle'));
-  $(this).data('toggle', src);
+  $(this)
+    .prev()
+    .addClass('loading');
+  $(this)
+    .css('visibility', 'hidden')
+    .attr('src', $(this).data('toggle'))
+    .data('toggle', src);
+  console.log($(this));
+  $(this).on('load', function () {
+    $(this)
+      .prev()
+      .removeClass('loading');
+    $(this).css('visibility', 'visible');
+  });
 });
 
 function createBtn(movie) {
@@ -84,12 +99,18 @@ function createBtn(movie) {
 
 function gifCard(gif) {
   console.log(gif);
+  let stillUrl = gif.images.fixed_height_still.url;
+  let gifUrl = gif.images.fixed_height.url;
+  let gifRating = gif.rating;
   let html = 
     `<div class="gif-card">
-      <img class="still-gif" src="${gif.images.original_still.url}" 
-      data-toggle="${gif.images.original.url}" 
-      alt="">
-      <p>Rating: ${gif.rating}</p>
+      <div class="images">
+        <div class="spinner"></div>
+        <img class="still-gif" src="${stillUrl}" 
+        data-toggle="${gifUrl}" 
+        alt="">
+      </div>
+      <p>Rating: ${gifRating}</p>
     </div>`;
   $gifCl.append(html);
 }
