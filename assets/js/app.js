@@ -6,39 +6,36 @@ const rating = 'pg-13';
 const key = 'df241e37d4254980952f95c9742d1247';
 
 const $btnCl = $('.btn-container');
+const $addInput = $('#add-input');
+const $addBtn = $('#add-button');
 const $gifCl = $('.gif-container');
 
 let movies = [
   "Die Hard",
-  "Gran Torino",
+  "Star Wars",
   "Braveheart",
   "Full Metal Jacket",
-  "The Green Mile",
-  "Raging Bull",
-  "The Departed",
+  "Breakfast Club",
+  "Bad Moms",
+  "The Blues Brothers",
   "Platoon",
   "The Shining",
   "Terminator 2",
   "Apocalypse Now",
-  "Dr Strangelove",
+  "Jaws",
   "Forrest Gump",
-  "The Usual Suspects",
+  "The Wizard of Oz",
   "The Matrix",
   "Goodfellas",
-  "Fight Club",
-  "The Dark Knight",
+  "Silence of The Lambs",
+  "Anchorman",
   "Inception",
   "The Godfather",
   "The Shawshank Redemption"
 ];
 
 $.each(movies, function(i, movie) {
-  let button = $('<button>');
-  button.attr({
-    'type': 'button',
-    'value': movie.toLowerCase(),
-  }).text(movie);
-  $btnCl.append(button);
+  $btnCl.append(createBtn(movie));
 });
 
 $btnCl.on('click', 'button', function () {
@@ -62,6 +59,21 @@ $btnCl.on('click', 'button', function () {
     });
   });
 });
+
+$addBtn.on('click', function () {
+  let title = $addInput.val().trim();
+  $btnCl.prepend(createBtn(title));
+  $addInput.val('');
+});
+
+function createBtn(movie) {
+  let button = $('<button>');
+  button.attr({
+    'type': 'button',
+    'value': movie.toLowerCase(),
+  }).text(movie);
+  return button;
+}
 
 function gifCard(gif) {
   console.log(gif);

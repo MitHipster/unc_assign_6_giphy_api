@@ -47,12 +47,18 @@ button:hover {
   background-color: #c4bc5b;
 }
 
+input {
+  width: 200px;
+  height: 36px;
+  background-color: #f5f5f5;
+  padding-left: 0.5rem;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
 /* Base Layout Styles
    ------------------------- */
-
-/* Navigation  */
-
-
 
 /* Layout Containers */
 
@@ -80,10 +86,19 @@ button:hover {
   overflow-x: scroll;
 }
 
+.input-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
 .gif-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 80px;
 }
 
 /* Page Elements */
@@ -94,9 +109,20 @@ button:hover {
   margin-right: -0.75rem;
 }
 
+#add-button {
+  height: 36px;
+  margin: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.gif-card {
+  padding: 1rem;
+}
+
 .still-gif {
   max-width: 100%;
-  height: auto;
+/*  height: auto;*/
 }
 
 /* Media Queries
@@ -123,6 +149,10 @@ button:hover {
     width: 64px;
     height: 64px;
     margin-right: -1rem;
+  }
+  
+  .gif-card {
+    padding: 2rem;
   }
 }
 
