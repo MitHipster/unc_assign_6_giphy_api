@@ -40,6 +40,7 @@ button {
   border-radius: 5px;
   margin: 0.5rem 0 0.5rem 0.5rem;
   padding: 0.5rem 0.75rem;
+  box-shadow: 0 10px 6px -5px rgba(0, 0, 0, 0.3);
   transition: background-color 0.4s ease-out;
 }
 
@@ -55,6 +56,7 @@ input {
   border: none;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Base Layout Styles
@@ -114,15 +116,31 @@ input {
   margin: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
 .gif-card {
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #00313d;
+  padding: 0.75rem;
+  margin: 0.75rem;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.4s ease-out;
+}
+
+.gif-card p {
+  margin-top: 0.6rem;
+}
+
+.gif-card:hover {
+  background-color: #004151;
 }
 
 .still-gif {
   max-width: 100%;
-/*  height: auto;*/
+  cursor: pointer;
 }
 
 /* Media Queries
@@ -151,8 +169,17 @@ input {
     margin-right: -1rem;
   }
   
+  .btn-container {
+    margin-top: 1rem;
+  }
+  
   .gif-card {
-    padding: 2rem;
+    padding: 1rem;
+    margin: 1rem;
+  }
+  
+  .gif-card p {
+    margin-top: 0.75rem;
   }
 }
 
