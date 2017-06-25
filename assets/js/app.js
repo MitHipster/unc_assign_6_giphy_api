@@ -9,6 +9,7 @@ const $btnCl = $('.btn-container');
 const $addInput = $('#add-input');
 const $addBtn = $('#add-button');
 const $gifCl = $('.gif-container');
+const $toggleCl = $('.still-gif');
 
 let movies = [
   "Die Hard",
@@ -64,6 +65,12 @@ $addBtn.on('click', function () {
   let title = $addInput.val().trim();
   $btnCl.prepend(createBtn(title));
   $addInput.val('');
+});
+
+$gifCl.on('click', 'img', function () {
+  let src = $(this).attr('src');
+  $(this).attr('src', $(this).data('toggle'));
+  $(this).data('toggle', src);
 });
 
 function createBtn(movie) {
