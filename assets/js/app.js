@@ -1,9 +1,9 @@
 /*jslint esversion: 6, browser: true*/
 /*global window, console, $, jQuery, alert*/
 
-const limit = 10;
-const rating = 'pg-13';
-const key = 'df241e37d4254980952f95c9742d1247';
+const limit = 10; // Maximum results to return
+const rating = 'pg-13'; // Rating up to and including
+const key = 'df241e37d4254980952f95c9742d1247'; // User API key
 
 const $btnCl = $('.btn-container');
 const $addInput = $('#add-input');
@@ -11,6 +11,7 @@ const $addBtn = $('#add-button');
 const $gifCl = $('.gif-container');
 const $toggleCl = $('.still-gif');
 
+// Array for initial movie buttons
 let movies = [
   "Die Hard",
   "Star Wars",
@@ -35,12 +36,16 @@ let movies = [
   "The Shawshank Redemption"
 ];
 
+// Loop through array and append buttons after calling createBtn function, passing array item
 $.each(movies, function(i, movie) {
   $btnCl.append(createBtn(movie));
 });
 
+// Button on click event for submitting search term
 $btnCl.on('click', 'button', function () {
+  // Get movie title
   let title = $(this).val();
+  // Create URL with search parameters for AJAX request
   let search = 'https://api.giphy.com/v1/gifs/search?';
   search += $.param({
     q: title,
@@ -48,38 +53,48 @@ $btnCl.on('click', 'button', function () {
     limit: limit,
     rating: rating
   });
-
+  
+  // AJAX request for retrieving Giphy information
   $.ajax({
     url: search,
     method: 'GET'
   }).done(function (results) {
+    // If successful, clear search string and gif container
     search = "";
     $gifCl.empty();
+    // Loop through results and call gifCard function, passing object argument
     $.each(results.data, function(i, result) {
       gifCard(result);
     });
   });
 });
 
+// Click event to prepend button based on user's input after calling createBtn function, passing input value
 $addBtn.on('click', function () {
   let title = $addInput.val().trim();
   $btnCl.prepend(createBtn(title));
+  // Clear input field
   $addInput.val('');
 });
 
+// Image on click event for switching between still and GIF
 $gifCl.on('click', 'img', function () {
 //  let src = $(this).attr('src');
 //  $(this).attr('src', $(this).data('toggle'));
 //  $(this).data('toggle', src);
+  // Store image source
   let src = $(this).attr('src');
+  // Select previous sibling and add loading class to create spinner effect
   $(this)
     .prev()
     .addClass('loading');
+  // Change visibility to hidden on clicked image and set source equal to 'data-toggle' value
   $(this)
     .css('visibility', 'hidden')
     .attr('src', $(this).data('toggle'))
     .data('toggle', src);
   console.log($(this));
+  // Image load event to remove spinner effect and set visibility back to visible
   $(this).on('load', function () {
     $(this)
       .prev()
@@ -88,6 +103,7 @@ $gifCl.on('click', 'img', function () {
   });
 });
 
+// Function to create initial buttons and any custom user buttons
 function createBtn(movie) {
   let button = $('<button>');
   button.attr({
@@ -97,11 +113,15 @@ function createBtn(movie) {
   return button;
 }
 
+// Function to create gif card
 function gifCard(gif) {
-  console.log(gif);
+  // Still image, fixed height 200px
   let stillUrl = gif.images.fixed_height_still.url;
+  // GIF image, fixed height 200px
   let gifUrl = gif.images.fixed_height.url;
+  // GIF rating
   let gifRating = gif.rating;
+  // Build out HTML for gif card
   let html = 
     `<div class="gif-card">
       <div class="images">
@@ -112,5 +132,6 @@ function gifCard(gif) {
       </div>
       <p>Rating: ${gifRating}</p>
     </div>`;
+  // Append to gif container
   $gifCl.append(html);
 }
