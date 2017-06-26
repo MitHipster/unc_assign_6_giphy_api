@@ -5,10 +5,10 @@ const limit = 10; // Maximum results to return
 const rating = 'pg-13'; // Rating up to and including
 const key = 'df241e37d4254980952f95c9742d1247'; // User API key
 
-const $btnCl = $('.btn-container');
+const $btnCont = $('.btn-container');
 const $addInput = $('#add-input');
 const $addBtn = $('#add-button');
-const $gifCl = $('.gif-container');
+const $gifCont = $('.gif-container');
 const $toggleCl = $('.still-gif');
 
 // Array for initial movie buttons
@@ -38,11 +38,11 @@ let movies = [
 
 // Loop through array and append buttons after calling createBtn function, passing array item
 $.each(movies, function(i, movie) {
-  $btnCl.append(createBtn(movie));
+  $btnCont.append(createBtn(movie));
 });
 
 // Button on click event for submitting search term
-$btnCl.on('click', 'button', function () {
+$btnCont.on('click', 'button', function () {
   // Get movie title
   let title = $(this).val();
   // Create URL with search parameters for AJAX request
@@ -61,7 +61,7 @@ $btnCl.on('click', 'button', function () {
   }).done(function (results) {
     // If successful, clear search string and gif container
     search = "";
-    $gifCl.empty();
+    $gifCont.empty();
     // Loop through results and call gifCard function, passing object argument
     $.each(results.data, function(i, result) {
       gifCard(result);
@@ -72,35 +72,37 @@ $btnCl.on('click', 'button', function () {
 // Click event to prepend button based on user's input after calling createBtn function, passing input value
 $addBtn.on('click', function () {
   let title = $addInput.val().trim();
-  $btnCl.prepend(createBtn(title));
+  $btnCont.prepend(createBtn(title));
   // Clear input field
   $addInput.val('');
 });
 
 // Image on click event for switching between still and GIF
-$gifCl.on('click', 'img', function () {
-//  let src = $(this).attr('src');
-//  $(this).attr('src', $(this).data('toggle'));
-//  $(this).data('toggle', src);
+$gifCont.on('click', 'img', function () {
   // Store image source
   let src = $(this).attr('src');
-  // Select previous sibling and add loading class to create spinner effect
-  $(this)
-    .prev()
-    .addClass('loading');
-  // Change visibility to hidden on clicked image and set source equal to 'data-toggle' value
-  $(this)
-    .css('visibility', 'hidden')
-    .attr('src', $(this).data('toggle'))
-    .data('toggle', src);
-  console.log($(this));
-  // Image load event to remove spinner effect and set visibility back to visible
-  $(this).on('load', function () {
+  // If image has class of 'still-active' then click is inital gif request
+  if ($(this).hasClass('still-active')) {
+    // Change visibility to hidden on clicked image, select previous sibling and add loading class to create spinner effect
     $(this)
+      .css('visibility', 'hidden')
       .prev()
-      .removeClass('loading');
-    $(this).css('visibility', 'visible');
-  });
+      .addClass('loading');
+    // Call change source function with source value and image object
+    changeSrc(src, $(this));
+    // Image load event to remove 'still-active' class, spinner effect and set visibility back to visible
+    $(this).on('load', function () {
+      $(this)
+        .removeClass('still-active')
+        .css('visibility', 'visible')
+        .prev()
+        .removeClass('loading');
+    });
+    // else image does not have 'still-active' class so gif has already been requested
+    } else {
+      // Call change source function with source value and image object
+      changeSrc(src, $(this));
+    }
 });
 
 // Function to create initial buttons and any custom user buttons
@@ -126,12 +128,19 @@ function gifCard(gif) {
     `<div class="gif-card">
       <div class="images">
         <div class="spinner"></div>
-        <img class="still-gif" src="${stillUrl}" 
+        <img class="still-active still-gif" src="${stillUrl}" 
         data-toggle="${gifUrl}" 
         alt="">
       </div>
       <p>Rating: ${gifRating}</p>
     </div>`;
   // Append to gif container
-  $gifCl.append(html);
+  $gifCont.append(html);
+}
+
+// Function to switch image source between still and gif
+function changeSrc(source, image) {
+  image
+    .attr('src', image.data('toggle'))
+    .data('toggle', source);
 }
