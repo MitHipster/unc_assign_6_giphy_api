@@ -116,6 +116,12 @@ input {
   margin-right: -0.75rem;
 }
 
+.arrows {
+  align-self: center;
+  width: 36px;
+  height: 36px
+}
+
 #add-button {
   height: 36px;
   margin: 0;

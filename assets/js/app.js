@@ -6,6 +6,8 @@ const rating = 'pg-13'; // Rating up to and including
 const key = 'df241e37d4254980952f95c9742d1247'; // User API key
 
 const $btnCont = $('.btn-container');
+const $arrowRightId = $('#arrow-right');
+const $arrowLeftId = $('#arrow-left');
 const $addInput = $('#add-input');
 const $addBtn = $('#add-button');
 const $gifCont = $('.gif-container');
@@ -38,7 +40,7 @@ let movies = [
 
 // Loop through array and append buttons after calling createBtn function, passing array item
 $.each(movies, function(i, movie) {
-  $btnCont.append(createBtn(movie));
+  (createBtn(movie)).insertBefore($arrowLeftId);
 });
 
 // Button on click event for submitting search term
@@ -66,13 +68,23 @@ $btnCont.on('click', 'button', function () {
     $.each(results.data, function(i, result) {
       gifCard(result);
     });
+    // Image collection that was created
+    let $imgCl = $('.still-gif');
+    $imgCl.on('load', function () {
+      // Select previous sibling and remove loading class. Also, remove inline styling from parent container to make its width and height dynamic
+      $(this)
+        .prev()
+        .removeClass('loading')
+        .parent()
+        .css({'width': '', 'height': ''});
+    });
   });
 });
 
 // Click event to prepend button based on user's input after calling createBtn function, passing input value
 $addBtn.on('click', function () {
   let title = $addInput.val().trim();
-  $btnCont.prepend(createBtn(title));
+  (createBtn(title)).insertAfter($arrowRightId);
   // Clear input field
   $addInput.val('');
 });
@@ -88,9 +100,9 @@ $gifCont.on('click', 'img', function () {
       .css('visibility', 'hidden')
       .prev()
       .addClass('loading');
-    // Call change source function with source value and image object
+    // Call changeSrc function with source value and image object
     changeSrc(src, $(this));
-    // Image load event to remove 'still-active' class, spinner effect and set visibility back to visible
+    // Image load event to remove 'still-active' and 'loading' classes and set visibility back to visible
     $(this).on('load', function () {
       $(this)
         .removeClass('still-active')
@@ -126,8 +138,8 @@ function gifCard(gif) {
   // Build out HTML for gif card
   let html = 
     `<div class="gif-card">
-      <div class="images">
-        <div class="spinner"></div>
+      <div class="images" style="width: 270px; height: 180px">
+        <div class="spinner loading"></div>
         <img class="still-active still-gif" src="${stillUrl}" 
         data-toggle="${gifUrl}" 
         alt="">
