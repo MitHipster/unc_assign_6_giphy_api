@@ -18,6 +18,8 @@ body {
   height: 100vh;
   font-family: 'Marcellus SC', serif;
   color: #f5f5f5;
+  background: url('../img/background.jpg') repeat;
+  background-size: cover;
   font-size: 1rem;
   letter-spacing: 0.05rem;
   line-height: 1.4;
@@ -30,7 +32,7 @@ footer {
 
 main {
   flex-grow: 1;
-  background-color: #005266;
+  background-color: rgba(0, 82, 102, 0.93);
 }
 
 button {
