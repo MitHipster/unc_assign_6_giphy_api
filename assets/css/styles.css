@@ -142,6 +142,7 @@ input {
 }
 
 .gif-card p {
+  visibility: hidden;
   margin-top: 0.6rem;
 }
 

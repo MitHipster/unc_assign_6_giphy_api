@@ -71,12 +71,16 @@ $btnCont.on('click', 'button', function () {
     // Image collection that was created
     let $imgCl = $('.still-gif');
     $imgCl.on('load', function () {
-      // Select previous sibling and remove loading class. Also, remove inline styling from parent container to make its width and height dynamic
+      // Select previous sibling and remove loading class.
       $(this)
         .prev()
         .removeClass('loading')
+        // Remove inline styling from parent container to make its width and height dynamic
         .parent()
-        .css({'width': '', 'height': ''});
+        .css({'width': '', 'height': ''})
+        // Find rating paragraph and set visibility to visible
+        .next('p')
+        .css('visibility', 'visible');
     });
   });
 });
