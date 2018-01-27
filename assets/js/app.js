@@ -91,6 +91,11 @@ $btnCont.on('click', 'button', function () {
 // Click event to prepend button based on user's input after calling createBtn function, passing input value
 $addBtn.on('click', function () {
   let title = $addInput.val().trim();
+  // Verify that a movie title was entered
+  if (!title) {
+    alert('Please enter a movie title before clicking Add.');
+    return false;
+  }
   // Convert added movie title to proper case
   title = title.toLowerCase().replace(/\b[a-z]/g, function(letter) {
     return letter.toUpperCase();
