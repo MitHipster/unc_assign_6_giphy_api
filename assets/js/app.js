@@ -11,6 +11,7 @@ const $arrowLeftId = $('#arrow-left');
 const $addInput = $('#add-input');
 const $addBtn = $('#add-button');
 const $gifCont = $('.gif-container');
+const $movieTitle = $('#movie-title');
 const $toggleCl = $('.still-gif');
 
 // Array for initial movie buttons
@@ -47,6 +48,7 @@ $.each(movies, function(i, movie) {
 $btnCont.on('click', 'button', function () {
   // Get movie title
   let title = $(this).val();
+  let titleHeading = $(this).text();
   // Create URL with search parameters for AJAX request
   let search = 'https://api.giphy.com/v1/gifs/search?';
   search += $.param({
@@ -61,9 +63,10 @@ $btnCont.on('click', 'button', function () {
     url: search,
     method: 'GET'
   }).done(function (results) {
-    // If successful, clear search string and gif container
-    search = "";
+    // If successful, gif container
     $gifCont.empty();
+    // Add movie title heading
+    $movieTitle.text(titleHeading);
     // Loop through results and call gifCard function, passing object argument
     $.each(results.data, function(i, result) {
       gifCard(result);
@@ -88,6 +91,10 @@ $btnCont.on('click', 'button', function () {
 // Click event to prepend button based on user's input after calling createBtn function, passing input value
 $addBtn.on('click', function () {
   let title = $addInput.val().trim();
+  // Convert added movie title to proper case
+  title = title.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+    return letter.toUpperCase();
+  });
   (createBtn(title)).insertAfter($arrowRightId);
   // Clear input field
   $addInput.val('');
